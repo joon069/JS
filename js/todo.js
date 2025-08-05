@@ -2,11 +2,13 @@ const toDoForm = document.querySelector("#todo-form");
 const toDoList = document.querySelector("#todo-list");
 const toDoInput = toDoForm.querySelector("input");
 
-const toDos = [];
+const TODOS_KEY = "todos"
+
+let toDos = [];
 
 
 function saveToDos() {
-  localStorage.setItem("todos", Json.stringify(toDos))
+  localStorage.setItem(TODOS_KEY, JSON.stringify(toDos))
 }
 
 function deleteToDo(event) {
@@ -27,8 +29,6 @@ function paintToDo(newTodo) {1
   button.addEventListener("click", deleteToDo);
 }
 
-
-
 function handleToDoSubmit(event) {
   event.preventDefault();
   const newToDo = toDoInput.value;
@@ -39,3 +39,12 @@ function handleToDoSubmit(event) {
 }
 
 toDoForm.addEventListener("submit", handleToDoSubmit);
+
+const savedToDos = localStorage.getItem(TODOS_KEY);
+
+if (savedToDos !== null) {
+  const parsedToDos = JSON.parse(savedToDos);
+  todos = parsedToDos;
+  parsedToDos.forEach(paintToDo);
+  
+}
